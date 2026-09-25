@@ -35,6 +35,7 @@ html, body {
 
 #app {
   position: relative;
+  width: 100%;
   max-width: 480px;
   height: 100%;
   margin: 0 auto;
@@ -249,10 +250,18 @@ button:disabled { opacity: 0.4; cursor: default; }
 .level-name { font-weight: 700; font-family: var(--font-serif); font-size: 17px; }
 .level-progress { font-size: 12px; opacity: 0.92; }
 
+.game-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-height: 0;
+}
+
 .grid-wrap {
   position: relative; z-index: 2;
   flex: 1 1 0;
   min-height: 0;
+  min-width: 0;
   display: flex; align-items: center; justify-content: center;
   padding: 10px 8px;
   overflow: auto;
@@ -345,6 +354,7 @@ button:disabled { opacity: 0.4; cursor: default; }
 
 .round-btn {
   position: relative;
+  flex-shrink: 0;
   width: 46px; height: 46px; border-radius: 50%;
   background: var(--paper); color: var(--ink);
   display: flex; align-items: center; justify-content: center;
@@ -443,7 +453,63 @@ button:disabled { opacity: 0.4; cursor: default; }
 .primary-btn { background: var(--accent-lake-dark); color: #fff; }
 .secondary-btn { background: var(--cream-deep); color: var(--ink); }
 
+/* ---------- RESPONSIVE ---------- */
+
+/* Shorter phones in portrait: shrink the wheel a little so everything fits without scrolling */
 @media (max-height: 700px) {
   .wheel { width: 170px; height: 170px; }
   .wheel-letter { width: 46px; height: 46px; margin-left: -23px; margin-top: -23px; font-size: 19px; }
+}
+
+/* Very short viewports (small phones, some browser chrome): trim padding further */
+@media (max-height: 560px) {
+  .menu-header { padding: 20px 24px 16px; }
+  .brand-mark svg { width: 34px; height: 34px; }
+  .menu-header h1 { font-size: 22px; }
+  .tagline { display: none; }
+  .game-header { padding: 10px 12px 4px; }
+  .wheel-area { padding: 4px 16px 14px; }
+}
+
+/* Very narrow phones: tighten side padding and type a touch */
+@media (max-width: 340px) {
+  .wheel-letter { font-size: 19px; }
+  .level-node { width: 54px; height: 54px; font-size: 17px; }
+  .icon-btn, .round-btn { width: 40px; height: 40px; }
+}
+
+/* Landscape phones / short-and-wide windows: the stacked layout leaves almost no
+   room for the crossword, so switch to a two-column layout — grid on the left,
+   wheel controls on the right — and let the frame use more of the width. */
+@media (max-height: 560px) and (orientation: landscape) {
+  #app { max-width: 760px; }
+
+  .game-body { flex-direction: row; }
+  .grid-wrap { padding: 6px; }
+  .wheel-area {
+    flex: 0 0 auto;
+    max-width: 46%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4px 14px 10px;
+  }
+  .word-row { margin-bottom: 6px; }
+  .wheel { width: 160px; height: 160px; }
+  .wheel-letter { width: 44px; height: 44px; margin-left: -22px; margin-top: -22px; font-size: 18px; }
+  .wheel-row { gap: 10px; }
+  .round-btn { width: 40px; height: 40px; }
+}
+
+@media (max-height: 380px) and (orientation: landscape) {
+  .wheel { width: 130px; height: 130px; }
+  .wheel-letter { width: 38px; height: 38px; margin-left: -19px; margin-top: -19px; font-size: 16px; }
+  .game-header { padding: 6px 10px 2px; }
+  .level-progress { display: none; }
+}
+
+/* Large screens: let the frame breathe a bit more instead of staying pinned at
+   phone width, without turning it into an unrelated desktop layout. */
+@media (min-width: 900px) and (min-height: 700px) {
+  #app { max-width: 520px; }
 }

@@ -196,10 +196,13 @@
     el.gameScreen.className = 'screen theme-' + theme;
     el.levelName.textContent = 'Level ' + id;
     updateProgressLabel();
+    // Show the screen before measuring anything against it, so the grid
+    // sizing below reads real, final layout dimensions instead of a
+    // transient state where both screens are briefly unhidden at once.
+    showScreen('game');
     renderGrid();
     renderWheel();
     updateHintUI();
-    showScreen('game');
   }
 
   function showScreen(which) {
@@ -223,9 +226,18 @@
     el.grid.style.gridTemplateColumns = `repeat(${width}, 1fr)`;
     el.grid.style.gridTemplateRows = `repeat(${height}, 1fr)`;
 
-    const maxCellFromWidth = Math.floor((Math.min(window.innerWidth, 480) - 24) / width);
-    const maxCellFromHeight = Math.floor((window.innerHeight * 0.42) / height);
-    const cellSize = Math.max(18, Math.min(40, maxCellFromWidth, maxCellFromHeight));
+    // Measure the actual space available in .grid-wrap rather than guessing
+    // from window size, so this adapts correctly whatever the current layout
+    // is (stacked portrait, side-by-side landscape, wide desktop frame, ...).
+    const wrap = el.grid.parentElement;
+    const wrapStyle = getComputedStyle(wrap);
+    const padX = parseFloat(wrapStyle.paddingLeft) + parseFloat(wrapStyle.paddingRight);
+    const padY = parseFloat(wrapStyle.paddingTop) + parseFloat(wrapStyle.paddingBottom);
+    const availW = Math.max(0, wrap.clientWidth - padX) - (width - 1) * 3;
+    const availH = Math.max(0, wrap.clientHeight - padY) - (height - 1) * 3;
+    const maxCellFromWidth = Math.floor(availW / width);
+    const maxCellFromHeight = Math.floor(availH / height);
+    const cellSize = Math.max(15, Math.min(40, maxCellFromWidth, maxCellFromHeight));
     el.grid.style.width = cellSize * width + (width - 1) * 3 + 'px';
     el.grid.style.height = cellSize * height + (height - 1) * 3 + 'px';
 
@@ -269,8 +281,13 @@
   function renderWheel() {
     el.wheel.querySelectorAll('.wheel-letter').forEach((n) => n.remove());
     const n = session.wheelOrder.length;
-    const radius = n <= 5 ? 68 : n === 6 ? 76 : 82;
-    const center = 100;
+    // Scale the letter ring to the wheel's actual rendered size (it shrinks
+    // at several breakpoints) instead of assuming a fixed 200x200 box —
+    // otherwise letters overflow outside a wheel CSS has made smaller.
+    const size = el.wheel.getBoundingClientRect().width || 200;
+    const center = size / 2;
+    const radiusFactor = n <= 5 ? 0.34 : n === 6 ? 0.38 : 0.41;
+    const radius = size * radiusFactor;
     session.wheelOrder.forEach((letterIndex, pos) => {
       const angle = (pos / n) * Math.PI * 2 - Math.PI / 2;
       const x = center + radius * Math.cos(angle);
