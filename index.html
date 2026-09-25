@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<title>Zen Word — Relax Puzzle Game</title>
+<meta name="description" content="A calming word-connect puzzle game. Drag letters to fill the crossword and unwind." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%233a6f8f%22/><text x=%2250%22 y=%2266%22 font-size=%2255%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22>Z</text></svg>" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="app">
+
+  <!-- MENU SCREEN -->
+  <section id="menu-screen" class="screen">
+    <header class="menu-header">
+      <div class="brand">
+        <div class="brand-tile">W</div>
+        <div class="brand-tile">O</div>
+        <div class="brand-tile">R</div>
+        <div class="brand-tile">D</div>
+      </div>
+      <h1>Zen Word</h1>
+      <p class="tagline">A quiet little puzzle to unwind with</p>
+      <div class="currency-pill" title="Hints available">
+        <span class="bulb">💡</span><span id="hint-count">3</span>
+      </div>
+    </header>
+    <div id="level-path" class="level-path"></div>
+    <footer class="menu-footer">Progress is saved automatically on this device.</footer>
+  </section>
+
+  <!-- GAME SCREEN -->
+  <section id="game-screen" class="screen hidden">
+    <div class="scenery" id="scenery"><div class="scenery-deco"></div></div>
+
+    <header class="game-header">
+      <button id="back-btn" class="icon-btn" aria-label="Back to levels">‹</button>
+      <div class="level-info">
+        <div class="level-name" id="level-name">Level 1</div>
+        <div class="level-progress" id="level-progress">0 / 0 words</div>
+      </div>
+      <button id="restart-btn" class="icon-btn" aria-label="Restart level">↺</button>
+    </header>
+
+    <div class="grid-wrap">
+      <div id="crossword-grid" class="crossword-grid"></div>
+    </div>
+
+    <div class="wheel-area">
+      <div class="current-word" id="current-word"></div>
+
+      <div class="wheel-row">
+        <button id="shuffle-btn" class="round-btn" aria-label="Shuffle letters">
+          <span class="round-icon">🔀</span>
+        </button>
+
+        <div id="wheel" class="wheel">
+          <svg id="wheel-lines" class="wheel-lines"></svg>
+          <div class="wheel-hub"></div>
+        </div>
+
+        <button id="hint-btn" class="round-btn" aria-label="Use a hint">
+          <span class="round-icon">💡</span>
+          <span class="round-badge" id="hint-badge">3</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+  </section>
+
+  <!-- LEVEL COMPLETE MODAL -->
+  <div id="complete-modal" class="modal hidden">
+    <div class="modal-card">
+      <div class="modal-stars" id="modal-stars">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      </div>
+      <h2>Level Complete</h2>
+      <p id="modal-sub">You found every word.</p>
+      <div class="modal-actions">
+        <button id="modal-menu-btn" class="secondary-btn">Levels</button>
+        <button id="modal-next-btn" class="primary-btn">Next Level</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAPTER COMPLETE MODAL -->
+  <div id="chapter-modal" class="modal hidden">
+    <div class="modal-card">
+      <h2 id="chapter-title">Chapter Complete</h2>
+      <p id="chapter-sub">You've cleared this scene.</p>
+      <div class="modal-actions">
+        <button id="chapter-menu-btn" class="primary-btn">Continue</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="levels.js"></script>
+<script src="crossword.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
