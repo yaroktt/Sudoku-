@@ -49,7 +49,14 @@
     </div>
 
     <div class="wheel-area">
-      <div class="current-word" id="current-word"></div>
+      <div class="word-row" id="word-row">
+        <div class="current-word" id="current-word"></div>
+        <button id="confirm-btn" class="confirm-btn" aria-label="Submit word">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 12l6 6L20 6"/>
+          </svg>
+        </button>
+      </div>
 
       <div class="wheel-row">
         <button id="shuffle-btn" class="round-btn" aria-label="Shuffle letters">
@@ -63,11 +70,7 @@
 
         <div id="wheel" class="wheel">
           <svg id="wheel-lines" class="wheel-lines"></svg>
-          <div class="wheel-hub" id="wheel-hub" aria-label="Submit word">
-            <svg class="hub-check" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 12l6 6L20 6"/>
-            </svg>
-          </div>
+          <div class="wheel-hub" id="wheel-hub" aria-label="Submit word"></div>
         </div>
 
         <button id="hint-btn" class="round-btn" aria-label="Use a hint">

@@ -17,7 +17,9 @@
     levelProgress: document.getElementById('level-progress'),
     grid: document.getElementById('crossword-grid'),
     scenery: document.getElementById('scenery'),
+    wordRow: document.getElementById('word-row'),
     currentWord: document.getElementById('current-word'),
+    confirmBtn: document.getElementById('confirm-btn'),
     wheel: document.getElementById('wheel'),
     wheelLines: document.getElementById('wheel-lines'),
     shuffleBtn: document.getElementById('shuffle-btn'),
@@ -295,7 +297,7 @@
       if (t) t.classList.add('active');
     });
     el.wheel.classList.toggle('has-word', session.path.length > 0);
-    el.currentWord.classList.toggle('has-word', session.path.length > 0);
+    el.wordRow.classList.toggle('has-word', session.path.length > 0);
     drawWheelLines();
     renderCurrentWord();
   }
@@ -399,8 +401,8 @@
     }
   });
 
-  // Tapping the word-in-progress also submits it
-  el.currentWord.addEventListener('pointerdown', (e) => {
+  // Tapping the word-in-progress, or the green confirm button, submits it
+  el.wordRow.addEventListener('pointerdown', (e) => {
     if (!session || !session.path.length) return;
     e.preventDefault();
     submitWord();
@@ -409,7 +411,7 @@
   // Tapping outside the wheel clears the current selection
   document.addEventListener('pointerdown', (e) => {
     if (!session) return;
-    if (e.target.closest('.wheel') || e.target.closest('#hint-btn') || e.target.closest('#shuffle-btn') || e.target.closest('#current-word')) return;
+    if (e.target.closest('.wheel') || e.target.closest('#hint-btn') || e.target.closest('#shuffle-btn') || e.target.closest('#word-row')) return;
     if (session.path.length) clearPath();
   });
 
