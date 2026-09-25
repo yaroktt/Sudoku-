@@ -294,6 +294,8 @@
       const t = tileForIndex(i);
       if (t) t.classList.add('active');
     });
+    el.wheel.classList.toggle('has-word', session.path.length > 0);
+    el.currentWord.classList.toggle('has-word', session.path.length > 0);
     drawWheelLines();
     renderCurrentWord();
   }
@@ -349,7 +351,14 @@
 
   el.wheel.addEventListener('pointerdown', (e) => {
     const idx = letterFromPoint(e.clientX, e.clientY);
-    if (idx === null) return;
+    if (idx === null) {
+      // tapped the hub or empty space inside the wheel: submit the word being built, if any
+      if (session.path.length >= 1) {
+        e.preventDefault();
+        submitWord();
+      }
+      return;
+    }
     pointerDown = true;
     session.dragMoved = false;
     if (session.path.length && session.path[session.path.length - 1] === idx && session.path.length > 0 && !session.dragActive) {
@@ -390,10 +399,17 @@
     }
   });
 
+  // Tapping the word-in-progress also submits it
+  el.currentWord.addEventListener('pointerdown', (e) => {
+    if (!session || !session.path.length) return;
+    e.preventDefault();
+    submitWord();
+  });
+
   // Tapping outside the wheel clears the current selection
   document.addEventListener('pointerdown', (e) => {
     if (!session) return;
-    if (e.target.closest('.wheel') || e.target.closest('#hint-btn') || e.target.closest('#shuffle-btn')) return;
+    if (e.target.closest('.wheel') || e.target.closest('#hint-btn') || e.target.closest('#shuffle-btn') || e.target.closest('#current-word')) return;
     if (session.path.length) clearPath();
   });
 
