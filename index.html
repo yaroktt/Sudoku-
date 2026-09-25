@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
 <title>Zen Word — Relax Puzzle Game</title>
 <meta name="description" content="A calming word-connect puzzle game. Drag letters to fill the crossword and unwind." />
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%233a6f8f%22/><text x=%2250%22 y=%2266%22 font-size=%2255%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22>Z</text></svg>" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23276560%22/><path d=%22M50 20c12 12 12 24 0 36s-12 24 0 36%22 fill=%22none%22 stroke=%22%23f7f1e3%22 stroke-width=%225%22 stroke-linecap=%22round%22/><circle cx=%2250%22 cy=%2250%22 r=%226%22 fill=%22%23dba43f%22/></svg>" />
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -13,17 +13,21 @@
 
   <!-- MENU SCREEN -->
   <section id="menu-screen" class="screen">
+    <div class="menu-blob blob-a"></div>
+    <div class="menu-blob blob-b"></div>
     <header class="menu-header">
-      <div class="brand">
-        <div class="brand-tile">W</div>
-        <div class="brand-tile">O</div>
-        <div class="brand-tile">R</div>
-        <div class="brand-tile">D</div>
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" width="46" height="46">
+          <circle cx="32" cy="32" r="30" fill="none" stroke="currentColor" stroke-width="2" opacity="0.35"/>
+          <path d="M32 8c8 8 8 16 0 24s-8 16 0 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M32 8c-8 8-8 16 0 24s8 16 0 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+          <circle cx="32" cy="32" r="4" fill="currentColor"/>
+        </svg>
       </div>
-      <h1>Zen Word</h1>
+      <h1>Zen&nbsp;Word</h1>
       <p class="tagline">A quiet little puzzle to unwind with</p>
       <div class="currency-pill" title="Hints available">
-        <span class="bulb">💡</span><span id="hint-count">3</span>
+        <span class="bulb">✦</span><span id="hint-count">3</span>
       </div>
     </header>
     <div id="level-path" class="level-path"></div>
@@ -32,7 +36,13 @@
 
   <!-- GAME SCREEN -->
   <section id="game-screen" class="screen hidden">
-    <div class="scenery" id="scenery"><div class="scenery-deco"></div></div>
+    <div class="scenery" id="scenery">
+      <div class="scenery-deco"></div>
+      <div class="motes" aria-hidden="true">
+        <span class="mote m1"></span><span class="mote m2"></span><span class="mote m3"></span>
+        <span class="mote m4"></span><span class="mote m5"></span><span class="mote m6"></span>
+      </div>
+    </div>
 
     <header class="game-header">
       <button id="back-btn" class="icon-btn" aria-label="Back to levels">‹</button>
@@ -52,7 +62,12 @@
 
       <div class="wheel-row">
         <button id="shuffle-btn" class="round-btn" aria-label="Shuffle letters">
-          <span class="round-icon">🔀</span>
+          <svg class="round-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 6h3.5c1.5 0 2.3 1 3 2l5 8c.7 1 1.5 2 3 2H21"/>
+            <path d="M17 4l4 2-4 2"/>
+            <path d="M3 18h3.5c1.5 0 2.3-1 3-2l1.2-2"/>
+            <path d="M17 20l4-2-4-2"/>
+          </svg>
         </button>
 
         <div id="wheel" class="wheel">
@@ -61,7 +76,11 @@
         </div>
 
         <button id="hint-btn" class="round-btn" aria-label="Use a hint">
-          <span class="round-icon">💡</span>
+          <svg class="round-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18h6"/>
+            <path d="M10 22h4"/>
+            <path d="M12 2a6.5 6.5 0 0 0-4 11.6c.7.6 1 1.3 1 2.1V16h6v-.3c0-.8.3-1.5 1-2.1A6.5 6.5 0 0 0 12 2z"/>
+          </svg>
           <span class="round-badge" id="hint-badge">3</span>
         </button>
       </div>

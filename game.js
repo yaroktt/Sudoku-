@@ -92,6 +92,9 @@
   }
 
   // ---------- Menu rendering ----------
+  const LOCK_ICON = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+  const WAVE_AFTER = { lake: 'balcony', balcony: 'sunset', sunset: 'mountain', mountain: null };
+
   function renderMenu() {
     el.hintCountMenu.textContent = progress.hints;
     el.levelPath.innerHTML = '';
@@ -107,9 +110,13 @@
       const nodes = document.createElement('div');
       nodes.className = 'chapter-nodes';
 
-      chapter.levels.forEach((id) => {
+      const pathSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      pathSvg.setAttribute('class', 'path-svg');
+      nodes.appendChild(pathSvg);
+
+      chapter.levels.forEach((id, i) => {
         const wrap = document.createElement('div');
-        wrap.className = 'node-wrap';
+        wrap.className = `node-wrap pos-${i + 1}`;
 
         const node = document.createElement('button');
         node.className = 'level-node';
@@ -119,7 +126,7 @@
 
         if (!isUnlocked) {
           node.classList.add('locked');
-          node.innerHTML = '<span class="lock-icon">🔒</span>';
+          node.innerHTML = LOCK_ICON;
           node.disabled = true;
         } else {
           if (isDone) node.classList.add('done');
@@ -138,8 +145,46 @@
       });
 
       block.appendChild(nodes);
+
+      const nextTheme = WAVE_AFTER[chapter.key];
+      const wave = document.createElement('div');
+      wave.className = `chapter-wave wave-fill-${nextTheme || 'paper'}`;
+      block.appendChild(wave);
+
       el.levelPath.appendChild(block);
+      drawChapterPath(nodes, pathSvg);
     });
+  }
+
+  function drawChapterPath(nodesEl, svg) {
+    const containerRect = nodesEl.getBoundingClientRect();
+    const width = containerRect.width;
+    const height = containerRect.height;
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+    svg.setAttribute('width', width);
+    svg.setAttribute('height', height);
+
+    const centers = [...nodesEl.querySelectorAll('.node-wrap')].map((wrap) => {
+      const r = wrap.getBoundingClientRect();
+      return [r.left - containerRect.left + r.width / 2, r.top - containerRect.top + r.height / 2];
+    });
+    if (centers.length < 2) return;
+
+    let d = `M ${centers[0][0]} ${centers[0][1]}`;
+    for (let i = 1; i < centers.length; i++) {
+      const [ax, ay] = centers[i - 1];
+      const [bx, by] = centers[i];
+      const my = (ay + by) / 2;
+      d += ` C ${ax} ${my}, ${bx} ${my}, ${bx} ${by}`;
+    }
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', d);
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', 'rgba(255,255,255,0.55)');
+    path.setAttribute('stroke-width', '3');
+    path.setAttribute('stroke-linecap', 'round');
+    path.setAttribute('stroke-dasharray', '2 12');
+    svg.appendChild(path);
   }
 
   // ---------- Game screen ----------
