@@ -22,3 +22,17 @@ Open `index.html` in a browser (or serve the folder with any static file server,
 - `levels.js` — level data (letters + target words) grouped into chapters
 - `crossword.js` — generates a crossword grid layout from a list of words
 - `game.js` — game state, rendering, input handling, and progress persistence
+- `images/` — chapter background photos (see below)
+
+## Background photos
+
+Each chapter's background is a real landscape photo tinted with that chapter's
+accent color (Lakeside → teal, Balcony → moss green, Sunset Cove → amber,
+Mountain Village → indigo). All four are free-to-use photos from
+[Pexels](https://www.pexels.com) (Pexels License — free for commercial and
+personal use, no attribution required):
+
+- `images/lake.jpg` — [Beautiful Landscape of Mountains Reflecting in a Still Lake](https://www.pexels.com/photo/beautiful-landscape-of-mountains-reflecting-in-a-still-lake-7204540/)
+- `images/balcony.jpg` — [Lush Green Garden Pathway with Topiary Trees](https://www.pexels.com/photo/lush-green-garden-pathway-with-topiary-trees-34581778/)
+- `images/sunset.jpg` — [Stunning Golden Sunset Over Calm Ocean Waters](https://www.pexels.com/photo/stunning-golden-sunset-over-calm-ocean-waters-28511273/)
+- `images/mountain.jpg` — [Scenic Mountain Village Landscape at Dusk](https://www.pexels.com/photo/scenic-mountain-village-landscape-at-dusk-33501087/)

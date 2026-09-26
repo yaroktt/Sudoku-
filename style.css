@@ -143,10 +143,11 @@ button:disabled { opacity: 0.4; cursor: default; }
   50% { transform: scale(1.09); box-shadow: 0 4px 0 rgba(0,0,0,0.16), 0 0 0 9px rgba(255,255,255,0); }
 }
 
-.chapter-block.theme-lake { background: linear-gradient(180deg, #6cb0ae, var(--accent-lake) 55%, var(--accent-lake-dark)); }
-.chapter-block.theme-balcony { background: linear-gradient(180deg, #9bb571, var(--accent-balcony) 55%, var(--accent-balcony-dark)); }
-.chapter-block.theme-sunset { background: linear-gradient(180deg, #eba86f, var(--accent-sunset) 55%, var(--accent-sunset-dark)); }
-.chapter-block.theme-mountain { background: linear-gradient(180deg, #8385bb, var(--accent-mountain) 55%, var(--accent-mountain-dark)); }
+.chapter-block { background-size: cover; background-position: center; }
+.chapter-block.theme-lake { background-image: linear-gradient(180deg, rgba(108,176,174,0.35), rgba(60,143,138,0.55) 45%, rgba(39,101,96,0.82)), url('images/lake.jpg'); }
+.chapter-block.theme-balcony { background-image: linear-gradient(180deg, rgba(155,181,113,0.35), rgba(121,151,74,0.55) 45%, rgba(85,112,47,0.82)), url('images/balcony.jpg'); }
+.chapter-block.theme-sunset { background-image: linear-gradient(180deg, rgba(235,168,111,0.3), rgba(214,125,71,0.5) 45%, rgba(165,83,42,0.8)), url('images/sunset.jpg'); }
+.chapter-block.theme-mountain { background-image: linear-gradient(180deg, rgba(131,133,187,0.4), rgba(96,98,160,0.6) 45%, rgba(44,45,84,0.85)), url('images/mountain.jpg'); }
 
 .chapter-wave {
   position: absolute; left: 0; right: 0; bottom: -1px; height: 46px;
@@ -162,50 +163,12 @@ button:disabled { opacity: 0.4; cursor: default; }
 /* ---------- GAME SCREEN ---------- */
 .scenery {
   position: absolute; inset: 0; z-index: 0; overflow: hidden;
+  background-size: cover; background-position: center;
 }
-.scenery-deco { position: absolute; inset: 0; }
-
-.theme-lake .scenery { background: linear-gradient(180deg,#cdeaea 0%,#79bdb8 45%,var(--accent-lake-dark) 100%); }
-.theme-balcony .scenery { background: linear-gradient(180deg,#e3ecc9 0%,#a8c17c 45%,var(--accent-balcony-dark) 100%); }
-.theme-sunset .scenery { background: linear-gradient(180deg,#ffdfae 0%,#ed9c68 45%,var(--accent-sunset-dark) 100%); }
-.theme-mountain .scenery { background: linear-gradient(180deg,#9294c9 0%,#5f61a0 45%,#2c2d54 100%); }
-
-.theme-lake .scenery-deco::before {
-  content: ""; position: absolute; left: 50%; top: 12%; width: 84px; height: 84px;
-  background: rgba(255,255,255,0.6); border-radius: 50%; transform: translateX(-50%); filter: blur(1px);
-}
-.theme-lake .scenery-deco::after {
-  content: ""; position: absolute; left: -10%; right: -10%; bottom: 0; height: 26%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.3), rgba(255,255,255,0));
-  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
-}
-.theme-balcony .scenery-deco::before {
-  content: ""; position: absolute; left: 12%; top: 6%; width: 60px; height: 60px;
-  background: radial-gradient(circle, #fff7d8, #f4d98a 70%); border-radius: 50%; opacity: 0.9;
-}
-.theme-balcony .scenery-deco::after {
-  content: ""; position: absolute; left: -5%; right: -5%; bottom: 0; height: 30%;
-  background: rgba(50, 60, 30, 0.28);
-  clip-path: polygon(0 100%, 0 55%, 20% 30%, 50% 60%, 80% 25%, 100% 55%, 100% 100%);
-}
-.theme-sunset .scenery-deco::before {
-  content: ""; position: absolute; left: 50%; top: 9%; width: 104px; height: 104px;
-  background: radial-gradient(circle, #fff2c9, #ffb37a 70%); border-radius: 50%; transform: translateX(-50%);
-  box-shadow: 0 0 50px 10px rgba(255, 200, 130, 0.5);
-}
-.theme-sunset .scenery-deco::after {
-  content: ""; position: absolute; left: -10%; right: -10%; bottom: 0; height: 20%;
-  background: linear-gradient(180deg, rgba(165,83,42,0), rgba(165,83,42,0.35));
-}
-.theme-mountain .scenery-deco::before {
-  content: ""; position: absolute; left: 22%; top: 7%; width: 42px; height: 42px;
-  background: rgba(255,255,255,0.9); border-radius: 50%; box-shadow: 0 0 22px 5px rgba(255,255,255,0.55);
-}
-.theme-mountain .scenery-deco::after {
-  content: ""; position: absolute; left: -10%; right: -10%; bottom: 0; height: 36%;
-  background: #262850;
-  clip-path: polygon(0% 100%, 0% 60%, 15% 40%, 30% 62%, 45% 30%, 60% 58%, 75% 20%, 90% 55%, 100% 38%, 100% 100%);
-}
+.theme-lake .scenery { background-image: linear-gradient(180deg, rgba(108,176,174,0.32), rgba(60,143,138,0.5) 45%, rgba(39,101,96,0.85)), url('images/lake.jpg'); }
+.theme-balcony .scenery { background-image: linear-gradient(180deg, rgba(155,181,113,0.3), rgba(121,151,74,0.48) 45%, rgba(85,112,47,0.85)), url('images/balcony.jpg'); }
+.theme-sunset .scenery { background-image: linear-gradient(180deg, rgba(235,168,111,0.25), rgba(214,125,71,0.42) 45%, rgba(165,83,42,0.82)), url('images/sunset.jpg'); }
+.theme-mountain .scenery { background-image: linear-gradient(180deg, rgba(131,133,187,0.35), rgba(96,98,160,0.55) 45%, rgba(44,45,84,0.88)), url('images/mountain.jpg'); }
 
 /* ambient motes, styled per theme */
 .motes { position: absolute; inset: 0; overflow: hidden; }
