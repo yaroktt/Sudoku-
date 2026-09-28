@@ -55,7 +55,7 @@ html, body {
   background: radial-gradient(circle at 30% 20%, #2f4a44 0%, #14201d 55%, #0a100e 100%);
   background-size: cover;
   background-position: center;
-  filter: blur(45px) brightness(0.55) saturate(1.15);
+  filter: blur(22px) brightness(0.85) saturate(1.35);
   transition: background-image 0.8s ease-in-out;
 }
 
