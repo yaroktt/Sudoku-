@@ -229,8 +229,17 @@ button:disabled { opacity: 0.4; cursor: default; }
   padding: 10px 8px;
   overflow: auto;
 }
+.grid-wrap::before {
+  content: "";
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: min(85vw, 380px); height: min(85vw, 380px);
+  background: radial-gradient(circle, rgba(255,255,255,0.4), rgba(255,255,255,0) 70%);
+  pointer-events: none;
+  z-index: 0;
+}
 
 .crossword-grid {
+  position: relative; z-index: 1;
   display: grid;
   gap: 3px;
   margin: auto;
@@ -473,6 +482,24 @@ button:disabled { opacity: 0.4; cursor: default; }
 
 /* Large screens: let the frame breathe a bit more instead of staying pinned at
    phone width, without turning it into an unrelated desktop layout. */
-@media (min-width: 900px) and (min-height: 700px) {
+/* Portrait tablets (iPad mini/Air/Pro and similar): the game is a portrait
+   card, so let it actually grow with the screen instead of staying
+   phone-width with huge dead bars either side. Scaled further below. */
+@media (min-width: 600px) and (orientation: portrait) {
+  #app { max-width: 680px; }
+  .wheel { width: 230px; height: 230px; }
+  .wheel-letter { width: 58px; height: 58px; margin-left: -29px; margin-top: -29px; font-size: 25px; }
+  .level-node { width: 72px; height: 72px; font-size: 22px; }
+}
+@media (min-width: 800px) and (orientation: portrait) {
+  #app { max-width: 780px; }
+  .wheel { width: 260px; height: 260px; }
+  .wheel-letter { width: 64px; height: 64px; margin-left: -32px; margin-top: -32px; font-size: 27px; }
+}
+
+/* Landscape windows tall enough that the portrait card fits comfortably
+   (large landscape tablets, desktop browsers): keep the calmer, more
+   deliberately phone-app-shaped frame rather than stretching it wide. */
+@media (min-width: 900px) and (min-height: 700px) and (orientation: landscape) {
   #app { max-width: 520px; }
 }

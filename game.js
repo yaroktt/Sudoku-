@@ -237,7 +237,10 @@
     const availH = Math.max(0, wrap.clientHeight - padY) - (height - 1) * 3;
     const maxCellFromWidth = Math.floor(availW / width);
     const maxCellFromHeight = Math.floor(availH / height);
-    const cellSize = Math.max(15, Math.min(40, maxCellFromWidth, maxCellFromHeight));
+    // Tablet-width frames render a bigger crossword card, so let cells grow
+    // past the phone-sized 40px cap to actually use that extra room.
+    const cellCap = window.innerWidth >= 800 ? 58 : window.innerWidth >= 600 ? 48 : 40;
+    const cellSize = Math.max(15, Math.min(cellCap, maxCellFromWidth, maxCellFromHeight));
     el.grid.style.width = cellSize * width + (width - 1) * 3 + 'px';
     el.grid.style.height = cellSize * height + (height - 1) * 3 + 'px';
 
@@ -584,6 +587,10 @@
   window.addEventListener('resize', () => {
     if (session && !el.gameScreen.classList.contains('hidden')) {
       renderGrid();
+      clearPath();
+      renderWheel();
+    } else if (!el.menuScreen.classList.contains('hidden')) {
+      renderMenu();
     }
   });
 

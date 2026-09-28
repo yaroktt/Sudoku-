@@ -1,10 +1,16 @@
 /**
  * Service worker for Zen Word.
- * Caches the whole game on install so it keeps working offline once it has
- * been opened once, and opportunistically caches anything else same-origin.
+ * Precaches the small app shell on install (so that step is fast and
+ * reliable), then caches everything else - the chapter photos especially,
+ * which are the largest files - opportunistically the first time each is
+ * actually requested. Precaching the photos with cache.addAll() was tried
+ * first, but addAll() is all-or-nothing: one slow or dropped image fetch
+ * (easy to hit on real cellular/wifi on first install) failed the whole
+ * install and left the app with no working cache at all, which is why
+ * images sometimes didn't show up in the installed app.
  */
-const CACHE_NAME = 'zenword-v1';
-const ASSETS = [
+const CACHE_NAME = 'zenword-v2';
+const CORE_ASSETS = [
   './',
   './index.html',
   './style.css',
@@ -12,10 +18,6 @@ const ASSETS = [
   './crossword.js',
   './game.js',
   './manifest.webmanifest',
-  './images/lake.jpg',
-  './images/balcony.jpg',
-  './images/sunset.jpg',
-  './images/mountain.jpg',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/icon-512-maskable.png',
@@ -25,7 +27,9 @@ const ASSETS = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(ASSETS))
+      .then((cache) => Promise.all(
+        CORE_ASSETS.map((url) => cache.add(url).catch(() => { /* one bad asset shouldn't block the rest */ }))
+      ))
       .then(() => self.skipWaiting())
   );
 });
