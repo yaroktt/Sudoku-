@@ -18,6 +18,7 @@ with no browser chrome, that keeps working offline after the first visit.
 - Drag-to-spell letter wheel with touch and mouse support (also supports tap-by-tap selection)
 - Auto-reveal: a word is completed automatically once every one of its letters has been uncovered by crossing words or hints
 - Shuffle, hints (earn one per level clear), star ratings, and progress saved to `localStorage`
+- Relaxing instrumental music while a level is open, with a slow stereo drift (Web Audio panning) for a wider, more spacious feel than flat mono/stereo — mutable from the in-game header, and the preference is remembered
 - No build step, no external dependencies — plain HTML/CSS/JS
 
 ## Files
@@ -28,6 +29,8 @@ with no browser chrome, that keeps working offline after the first visit.
 - `crossword.js` — generates a crossword grid layout from a list of words
 - `game.js` — game state, rendering, input handling, and progress persistence
 - `images/` — chapter background photos (see below)
+- `audio.js` — background music playback and its subtle stereo panning effect
+- `audio/` — background music track (see below)
 - `manifest.webmanifest` — PWA metadata (name, icons, standalone display)
 - `sw.js` — service worker that caches the game for offline play
 - `icons/` — app icons for the home screen / install prompt
@@ -49,3 +52,7 @@ required):
 - `images/snowpeak.jpg` (Snowy Peak, ice blue) — [Snow Capped Mountains Under Blue Sky](https://www.pexels.com/photo/snow-capped-mountains-under-blue-sky-12214866/)
 - `images/rainforest.jpg` (Rainforest Canopy, emerald) — [Lush Green Rainforest](https://www.pexels.com/photo/lush-green-rainforest-23515065/)
 - `images/starlit.jpg` (Starlit Bay, indigo night) — [A Starry Night Sky over the Ocean](https://www.pexels.com/photo/a-starry-night-sky-over-the-ocean-8738454/)
+
+## Background music
+
+- `audio/ambient.mp3` — [The Long Dark](https://www.scottbuckley.com.au/library/the-long-dark/) by Scott Buckley, released under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Credit: "'The Long Dark' by Scott Buckley - released under CC-BY 4.0. www.scottbuckley.com.au"

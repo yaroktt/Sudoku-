@@ -22,7 +22,10 @@
       </div>
     </header>
     <div id="level-path" class="level-path"></div>
-    <footer class="menu-footer">Progress is saved automatically on this device.</footer>
+    <footer class="menu-footer">
+      Progress is saved automatically on this device.
+      <br>Music: &ldquo;The Long Dark&rdquo; by <a href="https://www.scottbuckley.com.au/library/the-long-dark/" target="_blank" rel="noopener">Scott Buckley</a>, CC BY 4.0.
+    </footer>
   </section>
 
   <!-- GAME SCREEN -->
@@ -40,7 +43,21 @@
         <div class="level-name" id="level-name">Level 1</div>
         <div class="level-progress" id="level-progress">0 / 0 words</div>
       </div>
-      <button id="restart-btn" class="icon-btn" aria-label="Restart level">↺</button>
+      <div class="header-actions">
+        <button id="music-btn" class="icon-btn" aria-label="Toggle music" aria-pressed="false">
+          <svg class="round-icon icon-music-on" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 8H5a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h4l5 4V4L9 8z"/>
+            <path d="M16.2 8.8a5 5 0 0 1 0 6.4"/>
+            <path d="M18.6 6.2a8.5 8.5 0 0 1 0 11.6"/>
+          </svg>
+          <svg class="round-icon icon-music-off hidden" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 8H5a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h4l5 4V4L9 8z"/>
+            <line x1="16.5" y1="8.5" x2="22" y2="15.5"/>
+            <line x1="22" y1="8.5" x2="16.5" y2="15.5"/>
+          </svg>
+        </button>
+        <button id="restart-btn" class="icon-btn" aria-label="Restart level">↺</button>
+      </div>
     </header>
 
     <div class="game-body" id="game-body">
@@ -118,4 +135,5 @@
 
 <script src="levels.js"></script>
 <script src="crossword.js"></script>
+<script src="audio.js"></script>
 <script src="game.js"></script>

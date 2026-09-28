@@ -13,6 +13,7 @@
     hintCountMenu: document.getElementById('hint-count'),
     backBtn: document.getElementById('back-btn'),
     restartBtn: document.getElementById('restart-btn'),
+    musicBtn: document.getElementById('music-btn'),
     levelName: document.getElementById('level-name'),
     levelProgress: document.getElementById('level-progress'),
     grid: document.getElementById('crossword-grid'),
@@ -213,6 +214,28 @@
     el.menuScreen.classList.toggle('hidden', which !== 'menu');
     el.gameScreen.classList.toggle('hidden', which !== 'game');
     if (which === 'menu') renderMenu();
+    if (window.ZenAudio) {
+      if (which === 'game') window.ZenAudio.play();
+      else window.ZenAudio.pause();
+    }
+  }
+
+  // ---------- Background music toggle ----------
+  function updateMusicBtn() {
+    if (!el.musicBtn || !window.ZenAudio) return;
+    const muted = window.ZenAudio.isMuted();
+    el.musicBtn.classList.toggle('is-muted', muted);
+    el.musicBtn.setAttribute('aria-pressed', muted ? 'true' : 'false');
+    el.musicBtn.querySelector('.icon-music-on').classList.toggle('hidden', muted);
+    el.musicBtn.querySelector('.icon-music-off').classList.toggle('hidden', !muted);
+  }
+
+  if (el.musicBtn) {
+    el.musicBtn.addEventListener('click', () => {
+      window.ZenAudio.toggleMuted();
+      updateMusicBtn();
+    });
+    updateMusicBtn();
   }
 
   function updateProgressLabel() {
