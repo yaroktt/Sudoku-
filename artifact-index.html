@@ -1,5 +1,6 @@
-<title>Zen Word</title>
+<title>Wordhaven</title>
 <link rel="stylesheet" href="style.css" />
+<div id="backdrop"></div>
 <div id="app">
 
   <!-- MENU SCREEN -->
@@ -10,12 +11,12 @@
       <div class="brand-mark" aria-hidden="true">
         <svg viewBox="0 0 64 64" width="46" height="46">
           <circle cx="32" cy="32" r="30" fill="none" stroke="currentColor" stroke-width="2" opacity="0.35"/>
-          <path d="M32 8c8 8 8 16 0 24s-8 16 0 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-          <path d="M32 8c-8 8-8 16 0 24s8 16 0 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
-          <circle cx="32" cy="32" r="4" fill="currentColor"/>
+          <path d="M15 30 L32 15 L49 30" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M20 27 V47 H44 V27" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+          <circle cx="32" cy="38" r="3.2" fill="currentColor"/>
         </svg>
       </div>
-      <h1>Zen&nbsp;Word</h1>
+      <h1>Wordhaven</h1>
       <p class="tagline">A quiet little puzzle to unwind with</p>
       <div class="currency-pill" title="Hints available">
         <span class="bulb">✦</span><span id="hint-count">3</span>
@@ -34,6 +35,16 @@
       <div class="motes" aria-hidden="true">
         <span class="mote m1"></span><span class="mote m2"></span><span class="mote m3"></span>
         <span class="mote m4"></span><span class="mote m5"></span><span class="mote m6"></span>
+      </div>
+      <div class="critters" aria-hidden="true">
+        <span class="critter bird c1"></span>
+        <span class="critter bird c2"></span>
+        <span class="critter butterfly c1"></span>
+        <span class="critter butterfly c2"></span>
+        <span class="critter firefly c1"></span>
+        <span class="critter firefly c2"></span>
+        <span class="critter firefly c3"></span>
+        <span class="critter star c1"></span>
       </div>
     </div>
 
@@ -131,9 +142,21 @@
     </div>
   </div>
 
+  <!-- AD PLACEHOLDER: reserved slot for an interstitial ad network (AdMob,
+       Unity Ads, etc.) between levels. Swap ads.js's showInterstitial() for
+       a real SDK call when one is integrated; this markup can stay as-is. -->
+  <div id="ad-overlay" class="modal hidden">
+    <div class="modal-card ad-card">
+      <div class="ad-label">Advertisement</div>
+      <div class="ad-slot">Ad space<br>(plug in an ad network here)</div>
+      <button id="ad-close-btn" class="primary-btn" disabled>Continue</button>
+    </div>
+  </div>
+
 </div>
 
 <script src="levels.js"></script>
 <script src="crossword.js"></script>
 <script src="audio.js"></script>
+<script src="ads.js"></script>
 <script src="game.js"></script>

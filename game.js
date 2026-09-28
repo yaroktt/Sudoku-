@@ -11,6 +11,7 @@
     gameScreen: document.getElementById('game-screen'),
     levelPath: document.getElementById('level-path'),
     hintCountMenu: document.getElementById('hint-count'),
+    backdrop: document.getElementById('backdrop'),
     backBtn: document.getElementById('back-btn'),
     restartBtn: document.getElementById('restart-btn'),
     musicBtn: document.getElementById('music-btn'),
@@ -158,9 +159,33 @@
       wave.className = `chapter-wave wave-fill-${nextTheme || 'paper'}`;
       block.appendChild(wave);
 
+      block.dataset.theme = chapter.key;
       el.levelPath.appendChild(block);
       drawChapterPath(nodes, pathSvg);
     });
+    syncMenuBackdrop();
+  }
+
+  // ---------- Backdrop (fills the space outside the app frame on wide screens) ----------
+  function setBackdrop(theme) {
+    if (!el.backdrop) return;
+    el.backdrop.style.backgroundImage = theme ? `url('images/${theme}.jpg')` : '';
+  }
+
+  let menuBackdropObserver = null;
+  function syncMenuBackdrop() {
+    if (menuBackdropObserver) menuBackdropObserver.disconnect();
+    const blocks = [...el.levelPath.querySelectorAll('.chapter-block')];
+    if (!blocks.length) return;
+    setBackdrop(blocks[0].dataset.theme);
+    menuBackdropObserver = new IntersectionObserver((entries) => {
+      let best = null;
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && (!best || entry.intersectionRatio > best.intersectionRatio)) best = entry;
+      });
+      if (best) setBackdrop(best.target.dataset.theme);
+    }, { threshold: [0.25, 0.5, 0.75] });
+    blocks.forEach((b) => menuBackdropObserver.observe(b));
   }
 
   function drawChapterPath(nodesEl, svg) {
@@ -199,6 +224,7 @@
     session = buildSession(id);
     const theme = themeForLevel(id);
     el.gameScreen.className = 'screen theme-' + theme;
+    setBackdrop(theme);
     el.levelName.textContent = 'Level ' + id;
     updateProgressLabel();
     // Show the screen before measuring anything against it, so the grid
@@ -624,9 +650,12 @@
       el.completeModal.classList.add('hidden');
       if (isLastInChapter) {
         showChapterComplete(chapter);
-      } else {
-        startLevel(session.level.id + 1);
+        return;
       }
+      const nextId = session.level.id + 1;
+      const goNext = () => startLevel(nextId);
+      if (window.ZenAds) window.ZenAds.maybeShowInterstitial(session.level.id, goNext);
+      else goNext();
     };
     el.modalMenuBtn.onclick = () => {
       el.completeModal.classList.add('hidden');
@@ -643,11 +672,13 @@
     el.chapterModal.classList.remove('hidden');
     el.chapterMenuBtn.onclick = () => {
       el.chapterModal.classList.add('hidden');
-      if (nextChapter) {
-        startLevel(nextChapter.levels[0]);
-      } else {
+      if (!nextChapter) {
         showScreen('menu');
+        return;
       }
+      const goNext = () => startLevel(nextChapter.levels[0]);
+      if (window.ZenAds) window.ZenAds.maybeShowInterstitial(chapter.levels[chapter.levels.length - 1], goNext);
+      else goNext();
     };
   }
 

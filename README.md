@@ -1,4 +1,4 @@
-# Zen Word
+# Wordhaven
 
 A relaxing word-connect puzzle game for the browser, in the spirit of Zen Word / Wordscapes: drag letters on a wheel to spell words and fill in a crossword-style grid.
 
@@ -31,9 +31,10 @@ with no browser chrome, that keeps working offline after the first visit.
 - `images/` — chapter background photos (see below)
 - `audio.js` — background music playback and its subtle stereo panning effect
 - `audio/` — background music track (see below)
+- `ads.js` — placeholder interstitial ad slot shown every couple of levels, ready to swap in a real ad network SDK
 - `manifest.webmanifest` — PWA metadata (name, icons, standalone display)
 - `sw.js` — service worker that caches the game for offline play
-- `icons/` — app icons for the home screen / install prompt
+- `icons/` — app icons for the home screen / install prompt, including a 1024×1024 `icon-1024-appstore.png` sized for App Store/Play Store submission
 
 ## Background photos
 

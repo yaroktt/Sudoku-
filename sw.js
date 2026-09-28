@@ -1,5 +1,5 @@
 /**
- * Service worker for Zen Word.
+ * Service worker for Wordhaven.
  * Precaches the small app shell on install (so that step is fast and
  * reliable), then caches everything else - the chapter photos especially,
  * which are the largest files - opportunistically the first time each is
@@ -9,7 +9,7 @@
  * install and left the app with no working cache at all, which is why
  * images sometimes didn't show up in the installed app.
  */
-const CACHE_NAME = 'zenword-v4';
+const CACHE_NAME = 'zenword-v5';
 const CORE_ASSETS = [
   './',
   './index.html',

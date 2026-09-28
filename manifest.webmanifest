@@ -1,6 +1,6 @@
 {
-  "name": "Zen Word",
-  "short_name": "Zen Word",
+  "name": "Wordhaven",
+  "short_name": "Wordhaven",
   "description": "A relaxing word-connect puzzle game. Drag letters to fill the crossword and unwind.",
   "start_url": "./index.html",
   "scope": "./",

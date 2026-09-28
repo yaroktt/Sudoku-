@@ -1,5 +1,5 @@
 /**
- * Level data for Zen Word.
+ * Level data for Wordhaven.
  * Each level has a pool of unique letters (the wheel) and a list of every
  * target word the player can spell from that pool. Levels are ordered so
  * both the wheel size and the word count grow gradually from level 1 to

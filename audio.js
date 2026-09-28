@@ -1,5 +1,5 @@
 /**
- * Background music for Zen Word: a single relaxing instrumental loop that
+ * Background music for Wordhaven: a single relaxing instrumental loop that
  * plays while a level is open, with a slow, gentle left-right drift in the
  * stereo field via the Web Audio API (not positional/HRTF audio - just a
  * wider, "breathing" stereo image instead of a flat, static center, closer

@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-<title>Zen Word — Relax Puzzle Game</title>
+<title>Wordhaven — Relax Puzzle Game</title>
 <meta name="description" content="A calming word-connect puzzle game. Drag letters to fill the crossword and unwind." />
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23276560%22/><path d=%22M50 20c12 12 12 24 0 36s-12 24 0 36%22 fill=%22none%22 stroke=%22%23f7f1e3%22 stroke-width=%225%22 stroke-linecap=%22round%22/><circle cx=%2250%22 cy=%2250%22 r=%226%22 fill=%22%23dba43f%22/></svg>" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23276560%22/><path d=%22M24 47 L50 26 L76 47%22 fill=%22none%22 stroke=%22%23f7f1e3%22 stroke-width=%228%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><path d=%22M31 43 V76 H69 V43%22 fill=%22none%22 stroke=%22%23f7f1e3%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22 opacity=%220.85%22/><circle cx=%2250%22 cy=%2261%22 r=%226%22 fill=%22%23dba43f%22/></svg>" />
 <link rel="icon" sizes="32x32" href="icons/favicon-32.png" />
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
 <link rel="manifest" href="manifest.webmanifest" />
@@ -13,10 +13,11 @@
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="Zen Word" />
+<meta name="apple-mobile-web-app-title" content="Wordhaven" />
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+<div id="backdrop"></div>
 <div id="app">
 
   <!-- MENU SCREEN -->
@@ -27,12 +28,12 @@
       <div class="brand-mark" aria-hidden="true">
         <svg viewBox="0 0 64 64" width="46" height="46">
           <circle cx="32" cy="32" r="30" fill="none" stroke="currentColor" stroke-width="2" opacity="0.35"/>
-          <path d="M32 8c8 8 8 16 0 24s-8 16 0 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-          <path d="M32 8c-8 8-8 16 0 24s8 16 0 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
-          <circle cx="32" cy="32" r="4" fill="currentColor"/>
+          <path d="M15 30 L32 15 L49 30" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M20 27 V47 H44 V27" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+          <circle cx="32" cy="38" r="3.2" fill="currentColor"/>
         </svg>
       </div>
-      <h1>Zen&nbsp;Word</h1>
+      <h1>Wordhaven</h1>
       <p class="tagline">A quiet little puzzle to unwind with</p>
       <div class="currency-pill" title="Hints available">
         <span class="bulb">✦</span><span id="hint-count">3</span>
@@ -51,6 +52,16 @@
       <div class="motes" aria-hidden="true">
         <span class="mote m1"></span><span class="mote m2"></span><span class="mote m3"></span>
         <span class="mote m4"></span><span class="mote m5"></span><span class="mote m6"></span>
+      </div>
+      <div class="critters" aria-hidden="true">
+        <span class="critter bird c1"></span>
+        <span class="critter bird c2"></span>
+        <span class="critter butterfly c1"></span>
+        <span class="critter butterfly c2"></span>
+        <span class="critter firefly c1"></span>
+        <span class="critter firefly c2"></span>
+        <span class="critter firefly c3"></span>
+        <span class="critter star c1"></span>
       </div>
     </div>
 
@@ -148,11 +159,23 @@
     </div>
   </div>
 
+  <!-- AD PLACEHOLDER: reserved slot for an interstitial ad network (AdMob,
+       Unity Ads, etc.) between levels. Swap ads.js's showInterstitial() for
+       a real SDK call when one is integrated; this markup can stay as-is. -->
+  <div id="ad-overlay" class="modal hidden">
+    <div class="modal-card ad-card">
+      <div class="ad-label">Advertisement</div>
+      <div class="ad-slot">Ad space<br>(plug in an ad network here)</div>
+      <button id="ad-close-btn" class="primary-btn" disabled>Continue</button>
+    </div>
+  </div>
+
 </div>
 
 <script src="levels.js"></script>
 <script src="crossword.js"></script>
 <script src="audio.js"></script>
+<script src="ads.js"></script>
 <script src="game.js"></script>
 </body>
 </html>

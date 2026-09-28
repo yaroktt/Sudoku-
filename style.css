@@ -45,8 +45,23 @@ html, body {
   overscroll-behavior: none;
 }
 
+/* Fills the space outside the app's phone-shaped frame on wide/landscape
+   screens (tablets, desktop) with a softly blurred echo of whatever's
+   currently on screen, instead of flat black letterboxing either side. */
+#backdrop {
+  position: fixed;
+  top: -60px; left: -60px; right: -60px; bottom: -60px;
+  z-index: 0;
+  background: radial-gradient(circle at 30% 20%, #2f4a44 0%, #14201d 55%, #0a100e 100%);
+  background-size: cover;
+  background-position: center;
+  filter: blur(45px) brightness(0.55) saturate(1.15);
+  transition: background-image 0.8s ease-in-out;
+}
+
 #app {
   position: relative;
+  z-index: 1;
   width: 100%;
   max-width: 480px;
   height: 100%;
@@ -234,6 +249,101 @@ button:disabled { opacity: 0.4; cursor: default; }
 @keyframes sparkle {
   0%, 100% { opacity: 0.2; transform: scale(0.8); }
   50% { opacity: 1; transform: scale(1.3); }
+}
+
+/* ---------- Critters: a small, location-appropriate touch of life per
+   chapter (birds over open landscapes, a butterfly in the garden,
+   fireflies in the canopy, a shooting star over the bay). Each is hidden
+   by default and only switched on for the themes it suits. ---------- */
+.critters { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.critter { position: absolute; display: none; }
+
+/* Bird: two thin wings drawn from pseudo-elements, flapping as it glides
+   left to right at its own height, speed and delay. */
+.critter.bird { width: 20px; height: 10px; color: rgba(255,255,255,0.85); }
+.critter.bird::before, .critter.bird::after {
+  content: ''; position: absolute; top: 4px; width: 11px; height: 2px;
+  background: currentColor; border-radius: 2px;
+}
+.critter.bird::before { left: 0; transform-origin: right center; animation: bird-flap-left 0.9s ease-in-out infinite; }
+.critter.bird::after { right: 0; transform-origin: left center; animation: bird-flap-right 0.9s ease-in-out infinite; }
+.critter.bird.c1 { animation: fly-across-1 22s linear infinite; }
+.critter.bird.c2 { animation: fly-across-2 27s linear infinite 9s; }
+
+.theme-lake .critter.bird,
+.theme-mountain .critter.bird,
+.theme-harbor .critter.bird,
+.theme-sunset .critter.bird,
+.theme-autumn .critter.bird,
+.theme-desert .critter.bird,
+.theme-snowpeak .critter.bird { display: block; }
+
+@keyframes bird-flap-left { 0%, 100% { transform: rotate(35deg); } 50% { transform: rotate(8deg); } }
+@keyframes bird-flap-right { 0%, 100% { transform: rotate(-35deg); } 50% { transform: rotate(-8deg); } }
+@keyframes fly-across-1 { 0% { left: -8%; top: 16%; } 100% { left: 108%; top: 8%; } }
+@keyframes fly-across-2 { 0% { left: -8%; top: 30%; } 100% { left: 108%; top: 20%; } }
+
+/* Butterfly: a smaller, brighter version of the same wing shape on a
+   meandering, looping path instead of a straight glide. */
+.critter.butterfly { width: 12px; height: 7px; color: #f4c76b; }
+.critter.butterfly::before, .critter.butterfly::after {
+  content: ''; position: absolute; top: 2.5px; width: 7px; height: 2px;
+  background: currentColor; border-radius: 2px;
+}
+.critter.butterfly::before { left: 0; transform-origin: right center; animation: bird-flap-left 0.35s ease-in-out infinite; }
+.critter.butterfly::after { right: 0; transform-origin: left center; animation: bird-flap-right 0.35s ease-in-out infinite; }
+.critter.butterfly.c1 { animation: flutter-1 16s ease-in-out infinite; }
+.critter.butterfly.c2 { animation: flutter-2 19s ease-in-out infinite 5s; color: #e88fae; }
+.theme-balcony .critter.butterfly { display: block; }
+
+@keyframes flutter-1 {
+  0% { left: 8%; top: 60%; }
+  25% { left: 32%; top: 40%; }
+  50% { left: 20%; top: 70%; }
+  75% { left: 48%; top: 52%; }
+  100% { left: 8%; top: 60%; }
+}
+@keyframes flutter-2 {
+  0% { left: 70%; top: 50%; }
+  30% { left: 55%; top: 68%; }
+  60% { left: 80%; top: 58%; }
+  100% { left: 70%; top: 50%; }
+}
+
+/* Firefly: a soft glow drifting slowly through the canopy, brightening
+   and dimming as it goes rather than the sharper twinkle used elsewhere. */
+.critter.firefly {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: #d9f77c; box-shadow: 0 0 8px 3px rgba(217,247,124,0.85);
+}
+.theme-rainforest .critter.firefly { display: block; }
+.critter.firefly.c1 { animation: firefly-drift-1 9s ease-in-out infinite; }
+.critter.firefly.c2 { animation: firefly-drift-2 11s ease-in-out infinite 2s; }
+.critter.firefly.c3 { animation: firefly-drift-1 10s ease-in-out infinite 4.5s; }
+
+@keyframes firefly-drift-1 {
+  0%, 100% { left: 18%; top: 30%; opacity: 0.25; }
+  50% { left: 26%; top: 40%; opacity: 1; }
+}
+@keyframes firefly-drift-2 {
+  0%, 100% { left: 68%; top: 55%; opacity: 0.2; }
+  50% { left: 60%; top: 65%; opacity: 0.95; }
+}
+
+/* Shooting star: a quick bright streak across the night sky, most of the
+   cycle spent invisible so it reads as an occasional event, not a loop. */
+.critter.star {
+  width: 3px; height: 3px; border-radius: 50%;
+  background: #fff; box-shadow: 0 0 8px 3px rgba(255,255,255,0.85), -14px 6px 10px -2px rgba(255,255,255,0.35);
+  opacity: 0;
+}
+.theme-starlit .critter.star { display: block; animation: shooting-star 9s linear infinite 1.5s; }
+
+@keyframes shooting-star {
+  0%, 78% { opacity: 0; left: -5%; top: 12%; }
+  79% { opacity: 1; left: -5%; top: 12%; }
+  86% { opacity: 1; left: 58%; top: 46%; }
+  87%, 100% { opacity: 0; left: 62%; top: 50%; }
 }
 
 .game-header {
@@ -470,6 +580,18 @@ button:disabled { opacity: 0.4; cursor: default; }
 }
 .primary-btn { background: var(--accent-lake-dark); color: #fff; }
 .secondary-btn { background: var(--cream-deep); color: var(--ink); }
+
+.ad-label {
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-soft); margin-bottom: 10px;
+}
+.ad-slot {
+  border: 2px dashed rgba(44,54,47,0.25); border-radius: 14px;
+  padding: 44px 14px; margin-bottom: 20px;
+  font-size: 13px; line-height: 1.5; color: var(--ink-soft);
+  background: rgba(44,54,47,0.04);
+}
+#ad-close-btn { width: 100%; }
 
 /* ---------- RESPONSIVE ---------- */
 
