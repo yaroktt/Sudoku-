@@ -9,7 +9,7 @@
  * install and left the app with no working cache at all, which is why
  * images sometimes didn't show up in the installed app.
  */
-const CACHE_NAME = 'zenword-v2';
+const CACHE_NAME = 'zenword-v4';
 const CORE_ASSETS = [
   './',
   './index.html',

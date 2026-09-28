@@ -95,7 +95,11 @@
 
   // ---------- Menu rendering ----------
   const LOCK_ICON = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
-  const WAVE_AFTER = { lake: 'balcony', balcony: 'sunset', sunset: 'mountain', mountain: null };
+
+  function nextChapterKey(chapter) {
+    const next = CHAPTERS[CHAPTERS.indexOf(chapter) + 1];
+    return next ? next.key : null;
+  }
 
   function renderMenu() {
     el.hintCountMenu.textContent = progress.hints;
@@ -148,7 +152,7 @@
 
       block.appendChild(nodes);
 
-      const nextTheme = WAVE_AFTER[chapter.key];
+      const nextTheme = nextChapterKey(chapter);
       const wave = document.createElement('div');
       wave.className = `chapter-wave wave-fill-${nextTheme || 'paper'}`;
       block.appendChild(wave);
@@ -289,8 +293,9 @@
     // otherwise letters overflow outside a wheel CSS has made smaller.
     const size = el.wheel.getBoundingClientRect().width || 200;
     const center = size / 2;
-    const radiusFactor = n <= 5 ? 0.34 : n === 6 ? 0.38 : 0.41;
+    const radiusFactor = n <= 5 ? 0.34 : n === 6 ? 0.38 : n <= 8 ? 0.41 : n === 9 ? 0.44 : 0.46;
     const radius = size * radiusFactor;
+
     session.wheelOrder.forEach((letterIndex, pos) => {
       const angle = (pos / n) * Math.PI * 2 - Math.PI / 2;
       const x = center + radius * Math.cos(angle);
@@ -303,6 +308,28 @@
       btn.dataset.index = letterIndex;
       el.wheel.appendChild(btn);
     });
+
+    // On wheels with many letters, the CSS tile size (tuned for smaller
+    // wheels) can be wider than the gap between neighboring positions,
+    // making adjacent tiles physically overlap and breaking touch/drag
+    // targeting. Shrink tiles just enough to guarantee a gap whenever the
+    // circle is too crowded for the CSS default size.
+    const tiles = [...el.wheel.querySelectorAll('.wheel-letter')];
+    if (tiles.length > 1) {
+      const cssSize = tiles[0].getBoundingClientRect().width;
+      const neighborGap = 2 * radius * Math.sin(Math.PI / n);
+      const safeSize = neighborGap * 0.84;
+      if (safeSize < cssSize) {
+        const fontSize = Math.max(13, Math.round(safeSize * 0.42));
+        tiles.forEach((tile) => {
+          tile.style.width = safeSize + 'px';
+          tile.style.height = safeSize + 'px';
+          tile.style.marginLeft = -safeSize / 2 + 'px';
+          tile.style.marginTop = -safeSize / 2 + 'px';
+          tile.style.fontSize = fontSize + 'px';
+        });
+      }
+    }
     updateWheelVisuals();
   }
 
@@ -363,12 +390,31 @@
   // ---------- Pointer interaction ----------
   let pointerDown = false;
 
+  // How much of a tile's own radius counts as "on" it, for drag purposes.
+  // Kept well under 1 so a fast drag between two far-apart letters, which on
+  // a crowded wheel (7-8 letters) can pass close to a third tile's edge,
+  // doesn't register that tile as touched — deliberate taps/drags land near
+  // dead center anyway, so this doesn't make intended letters harder to hit.
+  const HIT_RADIUS_FRACTION = 0.55;
+
   function letterFromPoint(x, y) {
-    const target = document.elementFromPoint(x, y);
-    if (!target) return null;
-    const tile = target.closest('.wheel-letter');
-    if (!tile) return null;
-    return parseInt(tile.dataset.index, 10);
+    const tiles = el.wheel.querySelectorAll('.wheel-letter');
+    let best = null;
+    let bestDist = Infinity;
+    let bestRadius = 0;
+    tiles.forEach((tile) => {
+      const r = tile.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      const d = Math.hypot(x - cx, y - cy);
+      if (d < bestDist) {
+        bestDist = d;
+        best = tile;
+        bestRadius = r.width / 2;
+      }
+    });
+    if (!best || bestDist > bestRadius * HIT_RADIUS_FRACTION) return null;
+    return parseInt(best.dataset.index, 10);
   }
 
   el.wheel.addEventListener('pointerdown', (e) => {
@@ -399,13 +445,15 @@
     if (!pointerDown || !session || !session.dragActive) return;
     const idx = letterFromPoint(e.clientX, e.clientY);
     if (idx === null) return;
+    // Only ever extend the path here. An earlier version also let dragging
+    // back over the previous tile "undo" it, but on wheels with several
+    // tiles packed close together (our 7-10 letter levels especially) a
+    // fast straight-line drag between two other tiles can momentarily
+    // sweep across that tile too and get misread as an undo, silently
+    // dropping a correct letter out of an otherwise fully-correct word.
     if (!session.path.includes(idx)) {
       session.dragMoved = true;
       addToPath(idx);
-    } else if (session.path.length > 1 && session.path[session.path.length - 2] === idx) {
-      session.dragMoved = true;
-      session.path.pop();
-      updateWheelVisuals();
     }
   });
 

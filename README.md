@@ -13,7 +13,7 @@ with no browser chrome, that keeps working offline after the first visit.
 
 ## Features
 
-- 20 hand-built levels across 4 themed chapters (Lakeside, Balcony, Sunset Cove, Mountain Village)
+- 50 hand-built levels across 10 themed chapters (Lakeside, Balcony, Sunset Cove, Mountain Village, Harbor Lights, Autumn Grove, Desert Bloom, Snowy Peak, Rainforest Canopy, Starlit Bay), with difficulty ramping up gradually
 - Crossword grids generated automatically from each level's word list, with words interlocking wherever letters match
 - Drag-to-spell letter wheel with touch and mouse support (also supports tap-by-tap selection)
 - Auto-reveal: a word is completed automatically once every one of its letters has been uncovered by crossing words or hints
@@ -35,12 +35,17 @@ with no browser chrome, that keeps working offline after the first visit.
 ## Background photos
 
 Each chapter's background is a real landscape photo tinted with that chapter's
-accent color (Lakeside → teal, Balcony → moss green, Sunset Cove → amber,
-Mountain Village → indigo). All four are free-to-use photos from
-[Pexels](https://www.pexels.com) (Pexels License — free for commercial and
-personal use, no attribution required):
+accent color. All are free-to-use photos from [Pexels](https://www.pexels.com)
+(Pexels License — free for commercial and personal use, no attribution
+required):
 
-- `images/lake.jpg` — [Beautiful Landscape of Mountains Reflecting in a Still Lake](https://www.pexels.com/photo/beautiful-landscape-of-mountains-reflecting-in-a-still-lake-7204540/)
-- `images/balcony.jpg` — [Lush Green Garden Pathway with Topiary Trees](https://www.pexels.com/photo/lush-green-garden-pathway-with-topiary-trees-34581778/)
-- `images/sunset.jpg` — [Stunning Golden Sunset Over Calm Ocean Waters](https://www.pexels.com/photo/stunning-golden-sunset-over-calm-ocean-waters-28511273/)
-- `images/mountain.jpg` — [Scenic Mountain Village Landscape at Dusk](https://www.pexels.com/photo/scenic-mountain-village-landscape-at-dusk-33501087/)
+- `images/lake.jpg` (Lakeside, teal) — [Beautiful Landscape of Mountains Reflecting in a Still Lake](https://www.pexels.com/photo/beautiful-landscape-of-mountains-reflecting-in-a-still-lake-7204540/)
+- `images/balcony.jpg` (Balcony, moss green) — [Lush Green Garden Pathway with Topiary Trees](https://www.pexels.com/photo/lush-green-garden-pathway-with-topiary-trees-34581778/)
+- `images/sunset.jpg` (Sunset Cove, amber) — [Stunning Golden Sunset Over Calm Ocean Waters](https://www.pexels.com/photo/stunning-golden-sunset-over-calm-ocean-waters-28511273/)
+- `images/mountain.jpg` (Mountain Village, indigo) — [Scenic Mountain Village Landscape at Dusk](https://www.pexels.com/photo/scenic-mountain-village-landscape-at-dusk-33501087/)
+- `images/harbor.jpg` (Harbor Lights, rose) — [Scenic Harbor at Sunset with Seabirds and Boats](https://www.pexels.com/photo/scenic-harbor-at-sunset-with-seabirds-and-boats-30129361/)
+- `images/autumn.jpg` (Autumn Grove, amber-brown) — [Scenic Autumn Pathway Through Vibrant Forest](https://www.pexels.com/photo/scenic-autumn-pathway-through-vibrant-forest-36922149/)
+- `images/desert.jpg` (Desert Bloom, terracotta) — [Stunning Desert Sunset Over Sand Dunes](https://www.pexels.com/photo/stunning-desert-sunset-over-sand-dunes-30635456/)
+- `images/snowpeak.jpg` (Snowy Peak, ice blue) — [Snow Capped Mountains Under Blue Sky](https://www.pexels.com/photo/snow-capped-mountains-under-blue-sky-12214866/)
+- `images/rainforest.jpg` (Rainforest Canopy, emerald) — [Lush Green Rainforest](https://www.pexels.com/photo/lush-green-rainforest-23515065/)
+- `images/starlit.jpg` (Starlit Bay, indigo night) — [A Starry Night Sky over the Ocean](https://www.pexels.com/photo/a-starry-night-sky-over-the-ocean-8738454/)
