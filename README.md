@@ -6,6 +6,11 @@ A relaxing word-connect puzzle game for the browser, in the spirit of Zen Word /
 
 Open `index.html` in a browser (or serve the folder with any static file server, e.g. `python3 -m http.server`).
 
+It's also a installable app (PWA): once it's hosted somewhere over HTTPS,
+opening it and choosing "Add to Home Screen" (iOS/Android) or the browser's
+install prompt (Chrome/Edge desktop) installs it as a standalone app icon,
+with no browser chrome, that keeps working offline after the first visit.
+
 ## Features
 
 - 20 hand-built levels across 4 themed chapters (Lakeside, Balcony, Sunset Cove, Mountain Village)
@@ -23,6 +28,9 @@ Open `index.html` in a browser (or serve the folder with any static file server,
 - `crossword.js` — generates a crossword grid layout from a list of words
 - `game.js` — game state, rendering, input handling, and progress persistence
 - `images/` — chapter background photos (see below)
+- `manifest.webmanifest` — PWA metadata (name, icons, standalone display)
+- `sw.js` — service worker that caches the game for offline play
+- `icons/` — app icons for the home screen / install prompt
 
 ## Background photos
 

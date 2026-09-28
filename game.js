@@ -589,4 +589,13 @@
 
   // ---------- Boot ----------
   showScreen('menu');
+
+  // Register the service worker for offline play and "Add to Home Screen"
+  // installability. Skipped when embedded in an iframe (e.g. a Claude
+  // Artifact preview), which sandboxes service workers anyway.
+  if ('serviceWorker' in navigator && window.self === window.top) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(() => { /* offline support is best-effort */ });
+    });
+  }
 })();
